@@ -1,281 +1,135 @@
-
+import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_INSTRUCTION } from "../constants";
 import { UserSettings, AITool } from "../types";
 
-// ============= API KEY HELPERS =============
-
-const getGeminiKey = () => {
-  let key = (import.meta as any).env?.VITE_GEMINI_API_KEY;
-  if (!key || key === 'undefined' || key === 'your_gemini_api_key_here') {
-    return null;
-  }
-  return key.trim();
-};
-
-const getOpenAIKey = () => {
-  let key = (import.meta as any).env?.VITE_OPENAI_API_KEY;
-  if (!key || key === 'undefined' || key === 'your_openai_api_key_here') {
-    return null;
-  }
-  return key.trim();
-};
-
-// ============= GEMINI API =============
-
-const GEMINI_CONFIG = {
-  endpoints: ["https://generativelanguage.googleapis.com/v1"],
-  models: ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
-};
-
-async function callGemini(payload: any, apiKey: string) {
-  let lastError: any = null;
-
-  for (const endpoint of GEMINI_CONFIG.endpoints) {
-    for (const model of GEMINI_CONFIG.models) {
-      try {
-        const url = `${endpoint}/models/${model}:generateContent?key=${apiKey}`;
-        console.log(`[Gemini] Attempting ${model}...`);
-        
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          console.log(`[Gemini] Success with ${model}`);
-          return { data, usedModel: model, provider: 'Gemini' };
-        }
-
-        if (response.status === 404) {
-          console.warn(`[Gemini] ${model} not found.`);
-          lastError = new Error(`Model ${model} not available`);
-          continue;
-        }
-
-        console.error(`[Gemini] ${model} returned ${response.status}:`, data.error?.message);
-        lastError = new Error(data.error?.message || `API error ${response.status}`);
-        
-      } catch (err: any) {
-        console.error(`[Gemini] ${err.message}`);
-        lastError = err;
-        continue;
-      }
-    }
-  }
-
-  throw lastError || new Error("Gemini API failed");
-}
-
-// ============= OPENAI API =============
-
-const OPENAI_CONFIG = {
-  endpoint: "https://api.openai.com/v1/chat/completions",
-  models: ["gpt-4-turbo", "gpt-4", "gpt-3.5-turbo"]
-};
-
-async function callOpenAI(payload: any, apiKey: string) {
-  let lastError: any = null;
-
-  for (const model of OPENAI_CONFIG.models) {
-    try {
-      console.log(`[OpenAI] Attempting ${model}...`);
-      
-      const response = await fetch(OPENAI_CONFIG.endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-          model: model,
-          messages: payload.messages,
-          temperature: payload.temperature || 0.8,
-          max_tokens: payload.max_tokens || 2048
-        })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log(`[OpenAI] Success with ${model}`);
-        return { data, usedModel: model, provider: 'OpenAI' };
-      }
-
-      if (response.status === 404) {
-        console.warn(`[OpenAI] ${model} not found.`);
-        lastError = new Error(`Model ${model} not available`);
-        continue;
-      }
-
-      console.error(`[OpenAI] ${model} returned ${response.status}:`, data.error?.message);
-      lastError = new Error(data.error?.message || `API error ${response.status}`);
-      
-    } catch (err: any) {
-      console.error(`[OpenAI] ${err.message}`);
-      lastError = err;
-      continue;
-    }
-  }
-
-  throw lastError || new Error("OpenAI API failed");
-}
-
-// ============= UNIFIED SERVICE =============
+const getAI = () => new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 /**
- * Call either Gemini or OpenAI with automatic fallback
+ * Rapidly refines vague user input into a clearer, more descriptive sentence.
  */
-async function callAI(geminiPayload: any, openaiMessages: any[], apiPreference: 'gemini' | 'openai' | 'auto' = 'auto') {
-  const geminiKey = getGeminiKey();
-  const openaiKey = getOpenAIKey();
-
-  if (!geminiKey && !openaiKey) {
-    throw new Error("No API keys configured. Add VITE_GEMINI_API_KEY or VITE_OPENAI_API_KEY to .env");
-  }
-
-  let errors: string[] = [];
-
-  // Determine order based on preference
-  const providers: Array<{ name: string; key: string | null; fn: (p: any, k: string) => Promise<any> }> = [];
-
-  if (apiPreference === 'gemini' || apiPreference === 'auto') {
-    if (geminiKey) providers.push({ name: 'Gemini', key: geminiKey, fn: callGemini });
-  }
-  if (apiPreference === 'openai' || apiPreference === 'auto') {
-    if (openaiKey) providers.push({ name: 'OpenAI', key: openaiKey, fn: callOpenAI });
-  }
-  if (apiPreference === 'gemini' && geminiKey === null) {
-    providers.push({ name: 'OpenAI', key: openaiKey, fn: callOpenAI });
-  }
-  if (apiPreference === 'openai' && openaiKey === null) {
-    providers.push({ name: 'Gemini', key: geminiKey, fn: callGemini });
-  }
-
-  // Try each provider
-  for (const provider of providers) {
-    try {
-      if (provider.name === 'Gemini') {
-        return await callGemini(geminiPayload, provider.key!);
-      } else {
-        // Convert Gemini payload to OpenAI format
-        const openaiPayload = {
-          messages: openaiMessages,
-          temperature: geminiPayload.generationConfig?.temperature || 0.8,
-          max_tokens: geminiPayload.generationConfig?.maxOutputTokens || 2048
-        };
-        return await callOpenAI(openaiPayload, provider.key!);
-      }
-    } catch (err: any) {
-      console.error(`[AI Service] ${provider.name} failed:`, err.message);
-      errors.push(`${provider.name}: ${err.message}`);
-    }
-  }
-
-  const errorMsg = errors.join(' | ');
-  console.error(`[AI Service] All providers failed: ${errorMsg}`);
-  throw new Error(`All AI APIs failed: ${errorMsg}`);
-}
-
-// ============= EXPORTS =============
-
 export const refineInput = async (input: string) => {
-  try {
-    const messages = [
-      { role: "user", content: `Refine this vague intent into a descriptive sentence. Return ONLY the refined text.\n\nIntent: "${input}"` }
-    ];
-
-    const geminiPayload = {
-      contents: [{ parts: [{ text: messages[0].content }] }],
-      generationConfig: { temperature: 0.5, maxOutputTokens: 100 }
-    };
-
-    const result = await callAI(geminiPayload, messages);
+  const ai = getAI();
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-flash-preview', 
+    contents: `Refine and autocorrect this vague AI prompt intent into a clear, professional, and detailed descriptive sentence. Do not change the core meaning, just improve clarity and add professional keywords. Return ONLY the refined text.
     
-    if (result.provider === 'Gemini') {
-      return result.data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || input;
-    } else {
-      return result.data.choices?.[0]?.message?.content?.trim() || input;
+    Intent: "${input}"`,
+    config: {
+      temperature: 0.5,
+      maxOutputTokens: 100,
     }
-  } catch (error: any) {
-    console.error("Refine failure:", error.message);
-    return input;
-  }
+  });
+  return response.text?.trim() || input;
 };
 
 export const generatePrompt = async (userInput: string, targetTool: AITool = 'ChatGPT', preferences?: Partial<UserSettings>, sourceImage?: string) => {
-  try {
-    let context = `${SYSTEM_INSTRUCTION}\n\nTarget Platform: ${targetTool}`;
-    if (preferences) {
-      context += `\nTone: ${preferences.defaultTone}, Style: ${preferences.defaultStyle}`;
-    }
+  const ai = getAI();
+  
+  let contents: any;
+  let modelToUse = 'gemini-3-pro-preview';
 
-    // Gemini format
-    let geminiParts: any[] = [];
-    if (sourceImage) {
-      const base64Data = sourceImage.split(',')[1];
-      geminiParts.push({ inline_data: { mime_type: "image/jpeg", data: base64Data } });
-      geminiParts.push({ text: `Analysis Task: Engineer a prompt for ${targetTool} based on this image and intent.\n\nIntent: ${userInput}\n\n${context}` });
-    } else {
-      geminiParts.push({ text: `${context}\n\nUSER INTENT:\n${userInput}\n\nProvide the MASTER PROMPT, SETTINGS, and METADATA as requested.` });
-    }
+  const extendedInstruction = `${SYSTEM_INSTRUCTION}
 
-    const geminiPayload = {
-      contents: [{ parts: geminiParts }],
-      generationConfig: { temperature: 0.8, maxOutputTokens: 2048 }
+Additionally, at the very end of your response, after the USAGE TIP, include a section exactly like this:
+## METADATA
+- Health Score: [Number 0-100]
+- Logic Fidelity: [Number 0-100]
+- Platform Alignment: [Number 0-100]
+- Constraint Density: [Number 0-100]
+- Optimization: [Short comma-separated list of improvements made]`;
+
+  // If an image is provided, we perform Visual Logic Mapping (Image + Text -> Prompt)
+  if (sourceImage) {
+    const base64Data = sourceImage.split(',')[1];
+    contents = {
+      parts: [
+        {
+          inlineData: {
+            data: base64Data,
+            mimeType: 'image/jpeg',
+          },
+        },
+        {
+          text: `ANALYSIS TASK: Analyze the attached image and the following user intent: "${userInput}".
+          
+          YOUR GOAL: Generate a world-class, professional AI prompt for ${targetTool}.
+          
+          STEPS:
+          1. Extract visual characteristics from the image (composition, lighting, textures, camera angle, style).
+          2. Synthesize these visual elements with the user's intent to create an enhanced, highly detailed prompt.
+          3. Follow the strict structural rules of PromptGenieX.
+          
+          ${extendedInstruction}`
+        }
+      ]
     };
+  } else {
+    // Standard Text-to-Prompt Flow
+    contents = userInput;
+  }
 
-    // OpenAI format
-    const openaiMessages = [
-      { role: "system", content: context },
-      { role: "user", content: `${userInput}\n\nProvide the MASTER PROMPT, SETTINGS, and METADATA as requested.` }
-    ];
+  // Standard Text-to-Prompt Engineering Flow
+  let augmentedInstruction = extendedInstruction;
+  
+  augmentedInstruction += `\n\nCRITICAL: The user wants a prompt specifically for: ${targetTool}. 
+  Tailor all syntax, parameters, and style strictly to how ${targetTool} functions best.`;
 
-    const result = await callAI(geminiPayload, openaiMessages);
-    
-    let text = '';
-    if (result.provider === 'Gemini') {
-      text = result.data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    } else {
-      text = result.data.choices?.[0]?.message?.content || '';
+  if (preferences) {
+    if (preferences.customSystemInstruction && preferences.customSystemInstruction.trim().length > 0) {
+      augmentedInstruction = `USER'S CUSTOM SYSTEM CONTEXT:\n${preferences.customSystemInstruction}\n\n${augmentedInstruction}`;
     }
 
-    return parseResponse(text, targetTool, result.usedModel);
-  } catch (error: any) {
-    console.error("Engineering failure:", error.message);
-    throw error;
+    augmentedInstruction += `\n\nUSER PREFERENCES:
+- Default Tone: ${preferences.defaultTone || 'None'}
+- Default Style: ${preferences.defaultStyle || 'None'}
+- Preferred Length: ${preferences.defaultLength || 'None'}
+- Target Model Strategy: ${preferences.preferredModel || 'None'}`;
   }
-};
 
-function parseResponse(text: string, targetTool: string, model: string) {
+  const response = await ai.models.generateContent({
+    model: modelToUse,
+    contents: contents,
+    config: {
+      systemInstruction: augmentedInstruction,
+      temperature: 0.8,
+      thinkingConfig: { thinkingBudget: 4000 }
+    },
+  });
+
+  const text = response.text || '';
+  
   const masterPromptMatch = text.match(/## MASTER PROMPT\n([\s\S]*?)(?=\n## SETTINGS|$)/);
   const settingsMatch = text.match(/## SETTINGS\n([\s\S]*?)(?=\n## USAGE TIP|$)/);
+  const usageTipMatch = text.match(/## USAGE TIP\n([\s\S]*?)(?=\n## METADATA|$)/);
   const metadataMatch = text.match(/## METADATA\n([\s\S]*?)$/);
 
-  const masterPrompt = masterPromptMatch ? masterPromptMatch[1].trim() : text;
+  const masterPrompt = masterPromptMatch ? masterPromptMatch[1].trim() : "Could not generate prompt.";
   const settingsRaw = settingsMatch ? settingsMatch[1].trim() : "";
+  const usageTip = usageTipMatch ? usageTipMatch[1].trim() : "Copy and paste this into your favorite AI.";
   const metadataRaw = metadataMatch ? metadataMatch[1].trim() : "";
+
+  const settings = {
+    tone: settingsRaw.match(/- Tone: (.*)/)?.[1] || 'Professional',
+    style: settingsRaw.match(/- Style: (.*)/)?.[1] || 'Modern',
+    length: settingsRaw.match(/- Length: (.*)/)?.[1] || 'Optimized',
+    platform: settingsRaw.match(/- Platform: (.*)/)?.[1] || targetTool,
+    model: settingsRaw.match(/- Model: (.*)/)?.[1] || 'Any',
+  };
+
+  const metadata = {
+    healthScore: parseInt(metadataRaw.match(/- Health Score: (.*)/)?.[1] || '85'),
+    metrics: {
+      logicFidelity: parseInt(metadataRaw.match(/- Logic Fidelity: (.*)/)?.[1] || '80'),
+      platformAlignment: parseInt(metadataRaw.match(/- Platform Alignment: (.*)/)?.[1] || '90'),
+      constraintDensity: parseInt(metadataRaw.match(/- Constraint Density: (.*)/)?.[1] || '75'),
+    },
+    optimizations: (metadataRaw.match(/- Optimization: (.*)/)?.[1] || '').split(',').map(s => s.trim()).filter(Boolean)
+  };
 
   return {
     masterPrompt,
-    settings: {
-      tone: settingsRaw.match(/- Tone: (.*)/)?.[1] || 'Professional',
-      style: settingsRaw.match(/- Style: (.*)/)?.[1] || 'Modern',
-      length: 'Optimized',
-      platform: targetTool,
-      model: model,
-    },
-    usageTip: "Optimized for " + targetTool,
-    metadata: {
-      healthScore: parseInt(metadataRaw.match(/- Health Score: (.*)/)?.[1] || '90'),
-      metrics: {
-        logicFidelity: 85,
-        platformAlignment: 95,
-        constraintDensity: 80,
-      },
-      optimizations: ["Platform tuning", "Constraint injection"]
-    }
+    settings,
+    usageTip,
+    metadata
   };
-}
+};

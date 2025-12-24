@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -16,7 +15,7 @@ import { Affiliate } from './pages/Affiliate';
 
 const App: React.FC = () => {
   useEffect(() => {
-    const saved = localStorage.getItem('promptsmith_settings');
+    const saved = localStorage.getItem('promptgeniex_settings');
     if (saved) {
       try {
         const settings = JSON.parse(saved);

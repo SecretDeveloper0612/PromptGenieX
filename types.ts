@@ -25,7 +25,7 @@ export interface GeneratedPrompt {
   category: string;
 }
 
-export type Category =
+export type Category = 
   | 'General'
   | 'Image'
   | 'Video'
@@ -38,7 +38,7 @@ export type Category =
   | 'Logo'
   | 'Audio';
 
-export type AITool =
+export type AITool = 
   | 'ChatGPT'
   | 'Gemini'
   | 'Claude'
@@ -81,6 +81,7 @@ export interface UserSettings {
   notifyMarketingStrategy: boolean;
   customSystemInstruction: string;
   tonePresets: TonePreset[];
+  hasSeenTutorial: boolean;
 }
 
 export interface User {

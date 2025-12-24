@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import {
-  MessageSquare, Mail, Book, Terminal, ArrowRight, LifeBuoy,
+import { 
+  MessageSquare, Mail, Book, Terminal, ArrowRight, LifeBuoy, 
   Search, ChevronDown, ChevronUp, Zap, Shield, Sparkles,
   Globe, Clock, Headphones, MessageCircle, HelpCircle,
   AlertCircle, FileText, Cpu, Layout, Send, Users
@@ -43,7 +43,7 @@ export const Support: React.FC = () => {
       {/* Hero Search Section */}
       <section className="relative pt-24 pb-20 px-6 overflow-hidden border-b border-white/5">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] -z-10 animate-hero-glow" />
-
+        
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] mb-8">
             <LifeBuoy className="w-3 h-3" /> 24/7 Global Support
@@ -53,7 +53,7 @@ export const Support: React.FC = () => {
           </h1>
           <div className="relative max-w-2xl mx-auto group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-600 group-focus-within:text-purple-400 transition-colors" />
-            <input
+            <input 
               type="text"
               placeholder="Search documentation, patterns, or system status..."
               value={searchQuery}
@@ -66,7 +66,7 @@ export const Support: React.FC = () => {
 
       {/* Primary Channels */}
       <section className="max-w-7xl mx-auto px-6 -mt-10 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <SupportCard
+        <SupportCard 
           icon={<Book className="w-6 h-6" />}
           title="Knowledge Base"
           desc="Deep dives into model logic, engineering patterns, and universal frameworks."
@@ -74,7 +74,7 @@ export const Support: React.FC = () => {
           cta="Read Docs"
           color="blue"
         />
-        <SupportCard
+        <SupportCard 
           icon={<MessageCircle className="w-6 h-6" />}
           title="Community Lab"
           desc="Join 12k+ prompt engineers on Discord to share patterns and get live help."
@@ -82,7 +82,7 @@ export const Support: React.FC = () => {
           cta="Join Discord"
           color="purple"
         />
-        <SupportCard
+        <SupportCard 
           icon={<AlertCircle className="w-6 h-6" />}
           title="System Status"
           desc="Check real-time performance of our compiler engines and API infrastructure."
@@ -100,11 +100,11 @@ export const Support: React.FC = () => {
             <h2 className="text-4xl font-black font-satoshi tracking-tight mb-4">Popular Inquiries</h2>
             <p className="text-gray-500 font-medium">Quick solutions for common engineering challenges.</p>
           </div>
-
+          
           <div className="space-y-4">
             {FAQS.map((faq, idx) => (
               <div key={idx} className="glass rounded-[2rem] border-white/5 overflow-hidden transition-all shadow-xl">
-                <button
+                <button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
                   className="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-white/[0.02] transition-colors"
                 >
@@ -175,7 +175,7 @@ export const Support: React.FC = () => {
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">The Challenge</label>
-                  <textarea
+                  <textarea 
                     placeholder="Describe the logic drift or technical barrier you're encountering..."
                     required
                     className="w-full bg-white/5 border border-white/10 rounded-[2rem] px-6 py-6 h-40 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all resize-none font-medium leading-relaxed placeholder:text-gray-800"
@@ -197,7 +197,6 @@ export const Support: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatItem icon={<Globe className="w-5 h-5" />} label="Global Nodes" value="24/7" />
             <StatItem icon={<Headphones className="w-5 h-5" />} label="Response Time" value="< 4h" />
-            {/* Fix: Import 'Users' from lucide-react above */}
             <StatItem icon={<Users className="w-5 h-5" />} label="Community" value="12k+" />
             <StatItem icon={<CheckCircle2 className="w-5 h-5" />} label="Resolution Rate" value="99%" />
           </div>
@@ -207,11 +206,11 @@ export const Support: React.FC = () => {
   );
 };
 
-const SupportCard: React.FC<{
-  icon: React.ReactNode,
-  title: string,
-  desc: string,
-  link: string,
+const SupportCard: React.FC<{ 
+  icon: React.ReactNode, 
+  title: string, 
+  desc: string, 
+  link: string, 
   cta: string,
   color: 'purple' | 'blue' | 'emerald'
 }> = ({ icon, title, desc, link, cta, color }) => {
@@ -246,16 +245,16 @@ const StatItem: React.FC<{ icon: React.ReactNode, label: string, value: string }
 );
 
 const CheckCircle2: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
     {...props}
   >
     <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
