@@ -3,7 +3,7 @@ import React from 'react';
 import { Cpu, Globe, ImageIcon, Video, Palette, Zap, Box, Terminal, Shapes, Mic2, Music } from 'lucide-react';
 import { AITool } from './types';
 
-export const SYSTEM_INSTRUCTION = `You are PromptSmith AI, a world-class AI Prompt Engineer and Product Designer.
+export const SYSTEM_INSTRUCTION = `You are PromptGenieX AI, a world-class AI Prompt Engineer and Product Designer.
 Your job is to transform simple, unclear, or non-technical user ideas into world-class, production-ready prompts specifically optimized for a target AI platform.
 
 Your Engineering Philosophy:
@@ -48,82 +48,82 @@ export interface ToolMetadata {
 }
 
 export const TOOLS: ToolMetadata[] = [
-  { 
-    id: 'ChatGPT', 
-    name: 'ChatGPT', 
-    icon: <Cpu className="w-4 h-4" />, 
-    color: 'bg-[#10a37f]', 
+  {
+    id: 'ChatGPT',
+    name: 'ChatGPT',
+    icon: <Cpu className="w-4 h-4" />,
+    color: 'bg-[#10a37f]',
     category: 'Logic',
     deployUrl: 'https://chatgpt.com/?q={prompt}'
   },
-  { 
-    id: 'Gemini', 
-    name: 'Gemini', 
-    icon: <Zap className="w-4 h-4" />, 
-    color: 'bg-[#4285f4]', 
+  {
+    id: 'Gemini',
+    name: 'Gemini',
+    icon: <Zap className="w-4 h-4" />,
+    color: 'bg-[#4285f4]',
     category: 'Logic',
     deployUrl: 'https://gemini.google.com/app?q={prompt}'
   },
-  { 
-    id: 'Claude', 
-    name: 'Claude', 
-    icon: <Globe className="w-4 h-4" />, 
-    color: 'bg-[#d97757]', 
+  {
+    id: 'Claude',
+    name: 'Claude',
+    icon: <Globe className="w-4 h-4" />,
+    color: 'bg-[#d97757]',
     category: 'Logic',
     deployUrl: 'https://claude.ai/new' // Claude doesn't support query params reliably yet
   },
-  { 
-    id: 'Midjourney', 
-    name: 'Midjourney', 
-    icon: <ImageIcon className="w-4 h-4" />, 
-    color: 'bg-[#ff3b30]', 
+  {
+    id: 'Midjourney',
+    name: 'Midjourney',
+    icon: <ImageIcon className="w-4 h-4" />,
+    color: 'bg-[#ff3b30]',
     category: 'Visual',
     deployUrl: 'https://www.midjourney.com/explore'
   },
-  { 
-    id: 'ElevenLabs', 
-    name: 'ElevenLabs', 
-    icon: <Mic2 className="w-4 h-4" />, 
-    color: 'bg-[#f59e0b]', 
+  {
+    id: 'ElevenLabs',
+    name: 'ElevenLabs',
+    icon: <Mic2 className="w-4 h-4" />,
+    color: 'bg-[#f59e0b]',
     category: 'Audio',
     deployUrl: 'https://elevenlabs.io/app/speech-synthesis'
   },
-  { 
-    id: 'Sunno', 
-    name: 'Sunno', 
-    icon: <Music className="w-4 h-4" />, 
-    color: 'bg-[#ec4899]', 
+  {
+    id: 'Sunno',
+    name: 'Sunno',
+    icon: <Music className="w-4 h-4" />,
+    color: 'bg-[#ec4899]',
     category: 'Audio',
     deployUrl: 'https://suno.com/create'
   },
-  { 
-    id: 'DALL-E', 
-    name: 'DALL-E', 
-    icon: <Palette className="w-4 h-4" />, 
-    color: 'bg-[#5856d6]', 
+  {
+    id: 'DALL-E',
+    name: 'DALL-E',
+    icon: <Palette className="w-4 h-4" />,
+    color: 'bg-[#5856d6]',
     category: 'Visual',
     deployUrl: 'https://labs.openai.com/'
   },
-  { 
-    id: 'Sora', 
-    name: 'Sora', 
-    icon: <Video className="w-4 h-4" />, 
-    color: 'bg-[#af52de]', 
-    category: 'Video' 
+  {
+    id: 'Sora',
+    name: 'Sora',
+    icon: <Video className="w-4 h-4" />,
+    color: 'bg-[#af52de]',
+    category: 'Video'
   },
-  { 
-    id: 'Runway', 
-    name: 'Runway', 
-    icon: <Box className="w-4 h-4" />, 
-    color: 'bg-[#000000]', 
+  {
+    id: 'Runway',
+    name: 'Runway',
+    icon: <Box className="w-4 h-4" />,
+    color: 'bg-[#000000]',
     category: 'Video',
     deployUrl: 'https://app.runwayml.com/'
   },
-  { 
-    id: 'Stable Diffusion', 
-    name: 'SDXL', 
-    icon: <Terminal className="w-4 h-4" />, 
-    color: 'bg-[#ff9500]', 
+  {
+    id: 'Stable Diffusion',
+    name: 'SDXL',
+    icon: <Terminal className="w-4 h-4" />,
+    color: 'bg-[#ff9500]',
     category: 'Visual'
   },
 ];

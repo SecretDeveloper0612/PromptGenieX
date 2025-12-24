@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { 
-  User, Bell, Shield, Zap, Save, Check, CreditCard, 
-  ChevronRight, Lock, Key, Globe, Eye, EyeOff, 
+import {
+  User, Bell, Shield, Zap, Save, Check, CreditCard,
+  ChevronRight, Lock, Key, Globe, Eye, EyeOff,
   CreditCard as CardIcon, Receipt, AlertCircle, Plus,
   Info, Cpu, Terminal, Sparkles, Moon, Sun, Palette,
   Download, Trash2, Edit3, Type
@@ -29,13 +29,12 @@ const DEFAULT_SETTINGS: UserSettings = {
   tonePresets: [
     { id: '1', name: 'Brand Voice A', description: 'Confident, professional, and slightly futuristic.' },
     { id: '2', name: 'Marketing Tone B', description: 'High-energy, persuasive, and casual.' }
-  ],
-  hasSeenTutorial: false
+  ]
 };
 
 const downloadInvoice = (date: string, amount: string) => {
   const content = `
-    PROMPTSMITH AI - INVOICE
+    PromptGenieX AI - INVOICE
     -------------------------
     Date: ${date}
     Description: Professional Tier Subscription
@@ -43,9 +42,9 @@ const downloadInvoice = (date: string, amount: string) => {
     Status: PAID
     
     Thank you for being part of the elite.
-    PromptSmith AI Team
+    PromptGenieX AI Team
   `;
-  
+
   const blob = new Blob([content], { type: 'application/pdf' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -65,7 +64,7 @@ export const Settings: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('promptsmith_settings');
+    const saved = localStorage.getItem('PromptGenieX_settings');
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -79,8 +78,8 @@ export const Settings: React.FC = () => {
   const handleSave = () => {
     setIsSaving(true);
     setTimeout(() => {
-      localStorage.setItem('promptsmith_settings', JSON.stringify(settings));
-      
+      localStorage.setItem('PromptGenieX_settings', JSON.stringify(settings));
+
       if (settings.theme === 'light') {
         document.documentElement.classList.add('light');
       } else {
@@ -127,26 +126,26 @@ export const Settings: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Full Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     value={settings.name}
-                    onChange={e => setSettings({...settings, name: e.target.value})}
+                    onChange={e => setSettings({ ...settings, name: e.target.value })}
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all font-medium"
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Email Address</label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     value={settings.email}
-                    onChange={e => setSettings({...settings, email: e.target.value})}
+                    onChange={e => setSettings({ ...settings, email: e.target.value })}
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all font-medium"
                   />
                 </div>
               </div>
               <div className="space-y-1">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Professional Bio</label>
-                <textarea 
+                <textarea
                   placeholder="e.g. Senior Prompt Engineer focused on LLM safety and complex reasoning patterns."
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 h-28 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all resize-none font-medium leading-relaxed"
                 />
@@ -164,19 +163,17 @@ export const Settings: React.FC = () => {
                   <Palette className="text-purple-400 w-6 h-6" />
                   Appearance & Theme
                 </h3>
-                <p className="text-sm text-gray-500 font-medium">Customize how PromptSmith looks for you.</p>
+                <p className="text-sm text-gray-500 font-medium">Customize how PromptGenieX looks for you.</p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <button 
+                <button
                   onClick={() => setSettings({ ...settings, theme: 'dark' })}
-                  className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-6 ${
-                    settings.theme === 'dark' ? 'border-purple-500 bg-purple-500/10 shadow-xl' : 'border-white/5 bg-white/5 hover:bg-white/10'
-                  }`}
+                  className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-6 ${settings.theme === 'dark' ? 'border-purple-500 bg-purple-500/10 shadow-xl' : 'border-white/5 bg-white/5 hover:bg-white/10'
+                    }`}
                 >
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${
-                    settings.theme === 'dark' ? 'bg-purple-500 text-white' : 'bg-black/40 text-gray-500'
-                  }`}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${settings.theme === 'dark' ? 'bg-purple-500 text-white' : 'bg-black/40 text-gray-500'
+                    }`}>
                     <Moon className="w-8 h-8" />
                   </div>
                   <div>
@@ -185,15 +182,13 @@ export const Settings: React.FC = () => {
                   </div>
                 </button>
 
-                <button 
+                <button
                   onClick={() => setSettings({ ...settings, theme: 'light' })}
-                  className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-6 ${
-                    settings.theme === 'light' ? 'border-purple-500 bg-purple-500/10 shadow-xl' : 'border-white/5 bg-white/5 hover:bg-white/10'
-                  }`}
+                  className={`p-8 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-6 ${settings.theme === 'light' ? 'border-purple-500 bg-purple-500/10 shadow-xl' : 'border-white/5 bg-white/5 hover:bg-white/10'
+                    }`}
                 >
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${
-                    settings.theme === 'light' ? 'bg-purple-500 text-white' : 'bg-black/40 text-gray-500'
-                  }`}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all ${settings.theme === 'light' ? 'bg-purple-500 text-white' : 'bg-black/40 text-gray-500'
+                    }`}>
                     <Sun className="w-8 h-8" />
                   </div>
                   <div>
@@ -217,15 +212,15 @@ export const Settings: React.FC = () => {
                 </h3>
                 <p className="text-sm text-gray-500 font-medium">Configure the core logic applied to every generation.</p>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                     <Terminal className="w-3 h-3" /> Default Global Tone
                   </label>
-                  <select 
+                  <select
                     value={settings.defaultTone}
-                    onChange={e => setSettings({...settings, defaultTone: e.target.value})}
+                    onChange={e => setSettings({ ...settings, defaultTone: e.target.value })}
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-purple-500/10 appearance-none cursor-pointer font-bold"
                   >
                     <option className="bg-gray-900">Professional</option>
@@ -241,9 +236,9 @@ export const Settings: React.FC = () => {
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1 flex items-center gap-2">
                     <Cpu className="w-3 h-3" /> Preferred Engine
                   </label>
-                  <select 
+                  <select
                     value={settings.preferredModel}
-                    onChange={e => setSettings({...settings, preferredModel: e.target.value})}
+                    onChange={e => setSettings({ ...settings, preferredModel: e.target.value })}
                     className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-purple-500/10 appearance-none cursor-pointer font-bold"
                   >
                     <option className="bg-gray-900" value="gemini-3-pro-preview">Gemini 3 Pro (High Reasoning)</option>
@@ -268,20 +263,20 @@ export const Settings: React.FC = () => {
                   {settings.tonePresets?.map((preset) => (
                     <div key={preset.id} className="p-6 glass rounded-3xl border-white/5 space-y-4 group">
                       <div className="flex items-center justify-between">
-                        <input 
+                        <input
                           type="text"
                           value={preset.name}
                           onChange={(e) => updateTonePreset(preset.id, 'name', e.target.value)}
                           className="bg-transparent text-lg font-black font-satoshi focus:outline-none focus:border-b border-purple-500/50 w-full mr-4"
                         />
-                        <button 
+                        <button
                           onClick={() => removeTonePreset(preset.id)}
                           className="p-2 text-gray-700 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-                      <textarea 
+                      <textarea
                         value={preset.description}
                         onChange={(e) => updateTonePreset(preset.id, 'description', e.target.value)}
                         className="w-full bg-white/5 border border-white/5 rounded-2xl px-4 py-3 text-sm text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/20 resize-none h-20 font-medium"
@@ -297,17 +292,17 @@ export const Settings: React.FC = () => {
               </div>
 
               <div className="pt-8 border-t border-white/5 space-y-4">
-                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                       <label className="text-sm font-black font-satoshi uppercase tracking-tight text-purple-400">Custom Global Instruction</label>
-                    </div>
-                 </div>
-                 <textarea 
-                    value={settings.customSystemInstruction}
-                    onChange={e => setSettings({...settings, customSystemInstruction: e.target.value})}
-                    placeholder="e.g. Always include a section on performance optimization."
-                    className="w-full bg-white/5 border border-white/10 rounded-[2rem] px-8 py-6 h-40 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all resize-none font-mono text-sm leading-relaxed custom-scrollbar"
-                 />
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm font-black font-satoshi uppercase tracking-tight text-purple-400">Custom Global Instruction</label>
+                  </div>
+                </div>
+                <textarea
+                  value={settings.customSystemInstruction}
+                  onChange={e => setSettings({ ...settings, customSystemInstruction: e.target.value })}
+                  placeholder="e.g. Always include a section on performance optimization."
+                  className="w-full bg-white/5 border border-white/10 rounded-[2rem] px-8 py-6 h-40 focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all resize-none font-mono text-sm leading-relaxed custom-scrollbar"
+                />
               </div>
             </section>
           </div>
@@ -362,12 +357,12 @@ export const Settings: React.FC = () => {
                 <div className="space-y-2 max-w-md">
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Current Password</label>
                   <div className="relative">
-                    <input 
+                    <input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
                       className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 focus:outline-none focus:ring-4 focus:ring-purple-500/10 font-bold"
                     />
-                    <button 
+                    <button
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-white transition-colors"
                     >
@@ -394,14 +389,14 @@ export const Settings: React.FC = () => {
               </div>
 
               <div className="space-y-8">
-                <NotificationToggle 
-                  title="Pattern Updates" 
+                <NotificationToggle
+                  title="Pattern Updates"
                   description="Be notified when our core engineering logic is enhanced for new LLMs."
                   active={settings.notifyPatternUpdates}
                   onChange={(val) => setSettings({ ...settings, notifyPatternUpdates: val })}
                 />
-                <NotificationToggle 
-                  title="Account Activity" 
+                <NotificationToggle
+                  title="Account Activity"
                   description="Security alerts for logins from unrecognized browsers or IPs."
                   active={settings.notifyAccountActivity}
                   onChange={(val) => setSettings({ ...settings, notifyAccountActivity: val })}
@@ -420,41 +415,41 @@ export const Settings: React.FC = () => {
       <div className="flex flex-col lg:flex-row gap-16">
         <aside className="w-full lg:w-72 shrink-0 space-y-1">
           <h1 className="text-5xl font-black font-satoshi mb-12 px-2 tracking-tighter">Account</h1>
-          <SidebarItem 
-            icon={<User className="w-4 h-4" />} 
-            label="Profile" 
-            active={activeTab === 'Profile'} 
-            onClick={() => setActiveTab('Profile')} 
+          <SidebarItem
+            icon={<User className="w-4 h-4" />}
+            label="Profile"
+            active={activeTab === 'Profile'}
+            onClick={() => setActiveTab('Profile')}
           />
-          <SidebarItem 
-            icon={<Palette className="w-4 h-4" />} 
-            label="Appearance" 
-            active={activeTab === 'Appearance'} 
-            onClick={() => setActiveTab('Appearance')} 
+          <SidebarItem
+            icon={<Palette className="w-4 h-4" />}
+            label="Appearance"
+            active={activeTab === 'Appearance'}
+            onClick={() => setActiveTab('Appearance')}
           />
-          <SidebarItem 
-            icon={<Zap className="w-4 h-4" />} 
-            label="Prompt Defaults" 
-            active={activeTab === 'Prompt Defaults'} 
-            onClick={() => setActiveTab('Prompt Defaults')} 
+          <SidebarItem
+            icon={<Zap className="w-4 h-4" />}
+            label="Prompt Defaults"
+            active={activeTab === 'Prompt Defaults'}
+            onClick={() => setActiveTab('Prompt Defaults')}
           />
-          <SidebarItem 
-            icon={<CreditCard className="w-4 h-4" />} 
-            label="Billing" 
-            active={activeTab === 'Billing'} 
-            onClick={() => setActiveTab('Billing')} 
+          <SidebarItem
+            icon={<CreditCard className="w-4 h-4" />}
+            label="Billing"
+            active={activeTab === 'Billing'}
+            onClick={() => setActiveTab('Billing')}
           />
-          <SidebarItem 
-            icon={<Shield className="w-4 h-4" />} 
-            label="Security" 
-            active={activeTab === 'Security'} 
-            onClick={() => setActiveTab('Security')} 
+          <SidebarItem
+            icon={<Shield className="w-4 h-4" />}
+            label="Security"
+            active={activeTab === 'Security'}
+            onClick={() => setActiveTab('Security')}
           />
-          <SidebarItem 
-            icon={<Bell className="w-4 h-4" />} 
-            label="Notifications" 
-            active={activeTab === 'Notifications'} 
-            onClick={() => setActiveTab('Notifications')} 
+          <SidebarItem
+            icon={<Bell className="w-4 h-4" />}
+            label="Notifications"
+            active={activeTab === 'Notifications'}
+            onClick={() => setActiveTab('Notifications')}
           />
         </aside>
 
@@ -468,9 +463,9 @@ export const Settings: React.FC = () => {
                   <Check className="w-4 h-4" /> Settings Updated
                 </span>
               )}
-              <Button 
-                size="lg" 
-                className="px-14 h-16 text-xl rounded-[1.5rem] shadow-3xl shadow-purple-500/30 font-black tracking-tight" 
+              <Button
+                size="lg"
+                className="px-14 h-16 text-xl rounded-[1.5rem] shadow-3xl shadow-purple-500/30 font-black tracking-tight"
                 onClick={handleSave}
                 isLoading={isSaving}
               >
@@ -484,19 +479,18 @@ export const Settings: React.FC = () => {
   );
 };
 
-const SidebarItem: React.FC<{ 
-  icon: React.ReactNode, 
-  label: string, 
-  active?: boolean, 
-  onClick?: () => void 
+const SidebarItem: React.FC<{
+  icon: React.ReactNode,
+  label: string,
+  active?: boolean,
+  onClick?: () => void
 }> = ({ icon, label, active, onClick }) => (
-  <button 
+  <button
     onClick={onClick}
-    className={`w-full flex items-center justify-between gap-3 px-6 py-4 rounded-2xl transition-all ${
-      active 
-        ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-xl shadow-purple-500/5' 
-        : 'text-gray-500 hover:text-white hover:bg-white/5'
-    }`}
+    className={`w-full flex items-center justify-between gap-3 px-6 py-4 rounded-2xl transition-all ${active
+      ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20 shadow-xl shadow-purple-500/5'
+      : 'text-gray-500 hover:text-white hover:bg-white/5'
+      }`}
   >
     <div className="flex items-center gap-4">
       {icon}
@@ -517,7 +511,7 @@ const InvoiceRow: React.FC<{ date: string, amount: string, status: string }> = (
     </div>
     <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
       <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-400/5 px-3 py-1 rounded-lg border border-emerald-400/10">{status}</span>
-      <button 
+      <button
         onClick={(e) => {
           e.stopPropagation();
           downloadInvoice(date, amount);
@@ -544,7 +538,7 @@ const NotificationToggle: React.FC<{ title: string, description: string, active:
 };
 
 const Toggle: React.FC<{ active: boolean, onClick?: () => void }> = ({ active, onClick }) => (
-  <button 
+  <button
     onClick={onClick}
     className={`w-14 h-7 rounded-full p-1.5 transition-all duration-300 shadow-inner ${active ? 'bg-purple-500' : 'bg-white/10'}`}
   >

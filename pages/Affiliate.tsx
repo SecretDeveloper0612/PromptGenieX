@@ -20,7 +20,7 @@ export const Affiliate: React.FC = () => {
       <div className="relative text-center mb-24">
         {/* Glow Effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] -z-10 animate-hero-glow" />
-        
+
         <div className="flex flex-col items-center gap-6 mb-8">
           <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-black uppercase tracking-[0.3em] shadow-xl">
             <span className="relative flex h-2 w-2">
@@ -34,35 +34,35 @@ export const Affiliate: React.FC = () => {
         <h1 className="text-6xl md:text-9xl font-black font-satoshi tracking-tighter mb-8 leading-[0.85]">
           Earn with the <br /> <span className="animate-shimmer italic">Best</span> in Class.
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed mb-12">
-          The PromptSmith Affiliate Portal is currently under construction. Get ready to earn <span className="text-white">30% recurring commissions</span> for life.
+          The PromptGenieX Affiliate Portal is currently under construction. Get ready to earn <span className="text-white">30% recurring commissions</span> for life.
         </p>
 
         <div className="flex flex-wrap justify-center gap-8 opacity-60">
-           <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-purple-400" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Launching Q3 2024</span>
-           </div>
-           <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Verified Partnerships Only</span>
-           </div>
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-purple-400" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Launching Q3 2024</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Verified Partnerships Only</span>
+          </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
-        <BenefitCard 
+        <BenefitCard
           icon={<Percent className="w-6 h-6" />}
           title="Lifetime Revenue"
           desc="Not just a one-time bonus. Earn 30% recurring commission as long as your referrals stay active."
         />
-        <BenefitCard 
+        <BenefitCard
           icon={<Users className="w-6 h-6" />}
           title="Conversion Optimized"
           desc="Our high-conversion landing pages and engineered funnels do the selling for you."
         />
-        <BenefitCard 
+        <BenefitCard
           icon={<Award className="w-6 h-6" />}
           title="Exclusive Assets"
           desc="Get access to custom banners, social media kits, and direct engineering support."
@@ -71,10 +71,10 @@ export const Affiliate: React.FC = () => {
 
       <div className="glass p-12 md:p-24 rounded-[4rem] border-white/5 relative overflow-hidden text-center shadow-4xl">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-transparent pointer-events-none" />
-        
+
         <div className="relative z-10 max-w-2xl mx-auto">
           <div className="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 border border-purple-500/20">
-             <Rocket className="text-purple-400 w-8 h-8" />
+            <Rocket className="text-purple-400 w-8 h-8" />
           </div>
           <h2 className="text-4xl md:text-6xl font-black font-satoshi tracking-tight mb-6">Secure Early Access</h2>
           <p className="text-gray-400 text-lg font-medium mb-12 leading-relaxed">
@@ -91,8 +91,8 @@ export const Affiliate: React.FC = () => {
             </div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col md:flex-row gap-4">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

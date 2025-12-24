@@ -19,7 +19,7 @@ export const Privacy: React.FC = () => {
         <section>
           <h2 className="text-2xl font-black font-satoshi text-white mb-4">1. Data Sovereignty</h2>
           <p>
-            At PromptSmith AI, we believe your ideas are your most valuable asset. We do not use your generated prompts or inputs to train our global models. All "engineering" happens in isolated inference environments that purge data immediately after a session ends.
+            At PromptGenieX AI, we believe your ideas are your most valuable asset. We do not use your generated prompts or inputs to train our global models. All "engineering" happens in isolated inference environments that purge data immediately after a session ends.
           </p>
         </section>
 
@@ -38,7 +38,7 @@ export const Privacy: React.FC = () => {
         <section>
           <h2 className="text-2xl font-black font-satoshi text-white mb-4">3. Security Standards</h2>
           <p>
-            PromptSmith AI employs AES-256 encryption for all data at rest and TLS 1.3 for all data in transit. Your Private Vault is further secured using client-side encryption keys derived from your session token.
+            PromptGenieX AI employs AES-256 encryption for all data at rest and TLS 1.3 for all data in transit. Your Private Vault is further secured using client-side encryption keys derived from your session token.
           </p>
         </section>
 
