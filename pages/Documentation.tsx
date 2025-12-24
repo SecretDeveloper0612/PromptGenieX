@@ -91,7 +91,7 @@ export const Documentation: React.FC = () => {
         return (
           <DocPage title="Quick Start" subtitle="Get your first engineered prompt in under 30 seconds.">
             <p className="text-gray-400 text-lg leading-relaxed mb-10">
-              PromptSmith AI is designed to be the bridge between raw ideas and professional-grade AI execution. Follow these three steps to begin your engineering journey.
+              PromptGenieX is designed to be the bridge between raw ideas and professional-grade AI execution. Follow these three steps to begin your engineering journey.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                <StepCard num="01" title="Select Engine" desc="Choose the AI model you intend to use." />
@@ -114,7 +114,7 @@ export const Documentation: React.FC = () => {
         );
       case 'core-architecture':
         return (
-          <DocPage title="Core Architecture" subtitle="How PromptSmith compiles instructions.">
+          <DocPage title="Core Architecture" subtitle="How PromptGenieX compiles instructions.">
             <p className="text-gray-400 leading-relaxed mb-10">
               Our engineering pipeline uses a proprietary 4-stage compilation process to ensure mathematical adherence to your intent while maximizing model creativity.
             </p>
@@ -142,10 +142,10 @@ export const Documentation: React.FC = () => {
              </div>
              <div className="space-y-8">
                 <h3 className="text-2xl font-black font-satoshi">Integration Tokens</h3>
-                <p className="text-gray-400">If you are using the PromptSmith API for agency workflows, you must generate a Bearer Token in your settings panel.</p>
+                <p className="text-gray-400">If you are using the PromptGenieX API for agency workflows, you must generate a Bearer Token in your settings panel.</p>
                 <div className="bg-[#0c0c14] p-6 rounded-2xl border border-white/5 font-mono text-sm flex items-center justify-between">
-                   <span className="text-gray-500">Authorization: Bearer ps_live_********************</span>
-                   <button onClick={() => handleCopy("Bearer ps_live_********************", 'auth-key')} className="p-2 hover:bg-white/5 rounded-lg transition-all">
+                   <span className="text-gray-500">Authorization: Bearer pgx_live_********************</span>
+                   <button onClick={() => handleCopy("Bearer pgx_live_********************", 'auth-key')} className="p-2 hover:bg-white/5 rounded-lg transition-all">
                       {copied === 'auth-key' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-gray-600" />}
                    </button>
                 </div>
@@ -186,7 +186,7 @@ export const Documentation: React.FC = () => {
       case 'constraint-mapping':
         return (
           <DocPage title="Constraint Mapping" subtitle="Strict guardrails for predictable results.">
-             <p className="text-gray-400 mb-10">Constraints are just as important as the task itself. PromptSmith applies "Logical Dampening" to prevent the model from adding unwanted conversational filler.</p>
+             <p className="text-gray-400 mb-10">Constraints are just as important as the task itself. PromptGenieX applies "Logical Dampening" to prevent the model from adding unwanted conversational filler.</p>
              <div className="bg-[#0c0c14] border border-white/5 rounded-3xl p-8 font-mono text-sm leading-relaxed">
                 <div className="text-purple-400 mb-4 font-black"># CONSTRAINT_STACK_V4</div>
                 <div className="text-gray-500">// Native Negative Prompting</div>
@@ -240,7 +240,7 @@ export const Documentation: React.FC = () => {
                 </div>
                 <div className="space-y-4">
                    <h4 className="font-bold text-white flex items-center gap-2"><Maximize2 className="w-4 h-4 text-purple-400" /> Chaos & Stylize</h4>
-                   <p className="text-sm text-gray-500">PromptSmith automatically calculates the ideal --c and --s values based on your complexity request.</p>
+                   <p className="text-sm text-gray-500">PromptGenieX automatically calculates the ideal --c and --s values based on your complexity request.</p>
                 </div>
              </div>
           </DocPage>
@@ -273,7 +273,7 @@ export const Documentation: React.FC = () => {
       case 'dynamic-variables':
         return (
           <DocPage title="Dynamic Variables" subtitle="Creating modular prompt templates.">
-             <p className="text-gray-400 mb-10">Use the brackets [ ] or curly braces { } in your intents. PromptSmith detects these as input slots for reusable patterns.</p>
+             <p className="text-gray-400 mb-10">Use the brackets [ ] or curly braces { } in your intents. PromptGenieX detects these as input slots for reusable patterns.</p>
              <div className="p-8 glass rounded-3xl border-emerald-500/10 mb-8">
                 <h4 className="font-black font-satoshi text-emerald-400 mb-4">Variable Pattern</h4>
                 <p className="text-gray-300 font-mono">"Write an email to <span className="bg-emerald-500/20 text-emerald-400 px-2 rounded-md">[Client_Name]</span> about the <span className="bg-emerald-500/20 text-emerald-400 px-2 rounded-md">[Project_Scope]</span> using a <span className="bg-emerald-500/20 text-emerald-400 px-2 rounded-md">[Tone]</span> tone."</p>

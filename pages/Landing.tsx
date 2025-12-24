@@ -36,7 +36,7 @@ export const Landing: React.FC = () => {
       name: "Sarah Chen",
       role: "Senior AI Researcher",
       company: "NeuralSoft",
-      content: "The Logic Mapper is a game changer. It reduced our hallucination rate by 40% overnight. We don't ship without PromptSmith anymore.",
+      content: "The Logic Mapper is a game changer. It reduced our hallucination rate by 40% overnight. We don't ship without PromptGenieX anymore.",
       avatar: "https://i.pravatar.cc/150?u=sarah"
     },
     {
@@ -57,7 +57,7 @@ export const Landing: React.FC = () => {
       name: "David Park",
       role: "Fullstack Architect",
       company: "DevGrid",
-      content: "The Claude XML tagging engine in PromptSmith is incredible. It makes generating complex microservices feel like magic.",
+      content: "The Claude XML tagging engine in PromptGenieX is incredible. It makes generating complex microservices feel like magic.",
       avatar: "https://i.pravatar.cc/150?u=david"
     },
     {
@@ -110,7 +110,7 @@ export const Landing: React.FC = () => {
             Master the <span className="animate-shimmer italic">Art</span> of <br className="hidden md:block" /> AI Prompting.
           </h1>
           <p className="text-xl text-gray-400 mb-14 max-w-2xl mx-auto leading-relaxed font-medium animate-reveal delay-300">
-            Join 50,000+ creators using PromptSmith to turn raw ideas into high-performance, studio-quality instructions.
+            Join 50,000+ creators using PromptGenieX to turn raw ideas into high-performance, studio-quality instructions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-reveal delay-500">
             <Link to="/dashboard">
@@ -157,7 +157,7 @@ export const Landing: React.FC = () => {
         <div className="max-w-7xl mx-auto">
            <div className="text-center mb-16 animate-reveal">
               <h2 className="text-4xl font-black font-satoshi tracking-tight mb-4">The Precision <span className="text-purple-500 italic">Difference</span></h2>
-              <p className="text-gray-500 max-w-xl mx-auto font-medium">See how PromptSmith transforms generic requests into industrial-grade instructions.</p>
+              <p className="text-gray-500 max-w-xl mx-auto font-medium">See how PromptGenieX transforms generic requests into industrial-grade instructions.</p>
            </div>
 
            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -175,7 +175,7 @@ export const Landing: React.FC = () => {
               </div>
 
               <div className="glass p-10 rounded-[3rem] border-purple-500/20 bg-purple-500/[0.02] shadow-3xl shadow-purple-500/10 relative group border-2 animate-reveal delay-300">
-                 <div className="absolute top-8 right-8 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">PromptSmith Output</div>
+                 <div className="absolute top-8 right-8 px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full text-[10px] font-black text-purple-400 uppercase tracking-widest">PromptGenieX Output</div>
                  <div className="mb-6 w-12 h-12 rounded-2xl gradient-bg flex items-center justify-center text-white">
                     <Sparkles className="w-6 h-6" />
                  </div>
