@@ -1,0 +1,7 @@
+{
+  "name": "PromptSmith AI",
+  "description": "Turn simple ideas into world-class AI prompts using advanced prompt engineering patterns.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
